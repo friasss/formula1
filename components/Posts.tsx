@@ -8,21 +8,21 @@ const SAMPLE_POSTS: Post[] = [
   {
     id: '1',
     images: [],
-    description: 'Primer boceto del monoplaza Speed Bolt terminado. El diseño del chasis incorpora las líneas aerodinámicas inspiradas en el Martín Pescador. ¡Estamos listos para la fase de prototipado!',
+    description: 'Primer boceto del monoplaza Speed Bolt terminado. El diseño del chasis optimiza la aerodinámica para minimizar la resistencia del aire. ¡Listos para la fase de prototipado!',
     date: '2026-04-20',
     placeholder: true,
   },
   {
     id: '2',
     images: [],
-    description: 'Sesión de pruebas de materiales para el alerón delantero. Evaluamos diferentes compuestos buscando el balance perfecto entre rigidez y peso. Los resultados son prometedores.',
+    description: 'Sesión de pruebas de materiales para el alerón delantero. Evaluamos diferentes compuestos buscando el balance perfecto entre rigidez y peso.',
     date: '2026-04-15',
     placeholder: true,
   },
   {
     id: '3',
     images: [],
-    description: 'El equipo Speed Bolt reunido en el taller de IPISA. Planificación estratégica para la temporada STEM Racing 2026. ¡Cada miembro aporta algo único!',
+    description: 'El equipo Speed Bolt reunido en el taller de IPISA. Planificación estratégica para la temporada STEM Racing 2026.',
     date: '2026-04-10',
     placeholder: true,
   },
@@ -30,7 +30,7 @@ const SAMPLE_POSTS: Post[] = [
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr)
-  const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+  const months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC']
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
 }
 
@@ -46,7 +46,6 @@ export default function Posts() {
       if (data.posts && data.posts.length > 0) {
         setPosts(data.posts)
       } else {
-        // fallback to localStorage or samples
         const stored = localStorage.getItem('sb_posts')
         const local: Post[] = stored ? JSON.parse(stored) : []
         setPosts(local.length > 0 ? local : SAMPLE_POSTS)
@@ -61,7 +60,6 @@ export default function Posts() {
 
   useEffect(() => {
     loadPosts()
-
     const onNew = (e: Event) => {
       const post = (e as CustomEvent<Post>).detail
       setPosts(prev => {
@@ -78,150 +76,127 @@ export default function Posts() {
     window.dispatchEvent(new CustomEvent('open-post-detail', { detail: post }))
   }
 
+  const sorted = [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
   return (
-    <section
-      id="posts"
-      className="posts-section relative"
-      style={{ background: 'var(--black-soft)', padding: '8rem 0' }}
-    >
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 3rem' }}>
-        <div className="flex justify-between items-end mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+    <section id="posts" style={{ background: '#000', padding: '10rem 0' }}>
+      <div className="px-6 md:px-16" style={{ maxWidth: 1400, margin: '0 auto' }}>
+
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-14"
+        >
+          <div
+            className="flex items-center gap-3 mb-8"
+            style={{ fontSize: '0.6rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--orange)', fontFamily: 'var(--font-body), Oswald, sans-serif' }}
           >
-            <div
-              className="inline-flex items-center gap-2 mb-4"
-              style={{ fontSize: '0.65rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--orange)', fontFamily: 'var(--font-body), Oswald, sans-serif' }}
-            >
-              <div style={{ width: 30, height: 1, background: 'var(--orange)' }} />
-              Actualizaciones
-            </div>
-            <h2
-              style={{
-                fontFamily: 'var(--font-f1), Barlow Condensed, sans-serif',
-                fontWeight: 900,
-                fontStyle: 'italic',
-                fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                lineHeight: 1,
-                textTransform: 'uppercase',
-              }}
-            >
-              Últimos <span style={{ color: 'var(--orange)' }}>posts</span>
-            </h2>
-            <p style={{ color: 'var(--gray)', fontSize: '0.9rem', lineHeight: 1.7, marginTop: '0.5rem', fontFamily: 'var(--font-subtitle), League Spartan, sans-serif' }}>
-              Seguí nuestro progreso, avances de diseño y noticias del equipo.
-            </p>
-          </motion.div>
-        </div>
+            <div style={{ width: 30, height: 1, background: 'var(--orange)' }} />
+            Actualizaciones
+          </div>
+          <h2 style={{
+            fontFamily: 'var(--font-f1), Barlow Condensed, sans-serif',
+            fontWeight: 900,
+            fontStyle: 'italic',
+            fontSize: 'clamp(2.8rem, 6vw, 5.5rem)',
+            lineHeight: 0.88,
+            textTransform: 'uppercase',
+            letterSpacing: '-0.02em',
+          }}>
+            Últimos <span style={{ color: 'var(--orange)' }}>Posts</span>
+          </h2>
+        </motion.div>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--gray)' }}>
-            <div style={{ fontFamily: 'var(--font-f1), Barlow Condensed, sans-serif', fontStyle: 'italic', fontSize: '1.5rem', opacity: 0.3 }}>
-              Cargando...
-            </div>
+          <div style={{ padding: '4rem 0', color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-f1), Barlow Condensed, sans-serif', fontStyle: 'italic', fontSize: '1.2rem' }}>
+            Cargando...
           </div>
         ) : posts.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--gray)', fontFamily: 'var(--font-subtitle), League Spartan, sans-serif' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.3 }}>📷</div>
-            <p>Aún no hay publicaciones. ¡Próximamente compartiremos nuestro progreso!</p>
+          <div style={{ padding: '4rem 0', color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-subtitle), League Spartan, sans-serif', fontSize: '0.9rem' }}>
+            Próximamente compartiremos nuestro progreso.
           </div>
         ) : (
-          <div
-            className="grid gap-6"
-            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}
-          >
-            {[...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((post, i) => (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 1, background: 'rgba(255,255,255,0.04)' }}>
+            {sorted.map((post, i) => (
               <motion.div
                 key={post.id}
                 className="post-card cursor-pointer"
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: i * 0.07, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openDetail(post)}
-                style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  overflow: 'hidden',
-                }}
+                style={{ background: '#000', border: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden' }}
               >
-                {/* Image area */}
-                <div
-                  style={{
-                    aspectRatio: '1',
-                    background: 'linear-gradient(135deg, var(--teal-dark), var(--black))',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                {/* Image */}
+                <div style={{
+                  aspectRatio: '4/3',
+                  background: '#0a0a0a',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
                   {post.images && post.images.length > 0 ? (
                     <>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={post.images[0]} alt="Post" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       {post.images.length > 1 && (
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '0.8rem',
-                            right: '0.8rem',
-                            background: 'rgba(10,10,10,0.8)',
-                            padding: '0.3rem 0.6rem',
-                            fontSize: '0.65rem',
-                            backdropFilter: 'blur(6px)',
-                            fontFamily: 'var(--font-body), Oswald, sans-serif',
-                          }}
-                        >
+                        <div style={{
+                          position: 'absolute',
+                          top: '0.75rem',
+                          right: '0.75rem',
+                          background: 'rgba(0,0,0,0.8)',
+                          padding: '0.25rem 0.6rem',
+                          fontSize: '0.55rem',
+                          letterSpacing: '0.15em',
+                          color: 'rgba(255,255,255,0.6)',
+                          fontFamily: 'var(--font-body), Oswald, sans-serif',
+                          textTransform: 'uppercase',
+                        }}>
                           {post.images.length} fotos
                         </div>
                       )}
                     </>
                   ) : (
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-f1), Barlow Condensed, sans-serif',
-                        fontSize: '4rem',
-                        fontWeight: 900,
-                        fontStyle: 'italic',
-                        color: 'rgba(227,121,3,0.15)',
-                      }}
-                    >
+                    <span style={{
+                      fontFamily: 'var(--font-f1), Barlow Condensed, sans-serif',
+                      fontSize: '5rem',
+                      fontWeight: 900,
+                      fontStyle: 'italic',
+                      color: 'rgba(227,121,3,0.1)',
+                      userSelect: 'none',
+                    }}>
                       SB
                     </span>
                   )}
                 </div>
 
                 {/* Body */}
-                <div style={{ padding: '1.5rem' }}>
-                  <div
-                    style={{
-                      fontSize: '0.6rem',
-                      color: 'var(--gray)',
-                      letterSpacing: '0.15em',
-                      textTransform: 'uppercase',
-                      marginBottom: '0.5rem',
-                      fontFamily: 'var(--font-body), Oswald, sans-serif',
-                    }}
-                  >
+                <div style={{ padding: '1.5rem 1.75rem 1.75rem' }}>
+                  <div style={{
+                    fontSize: '0.55rem',
+                    color: 'rgba(255,255,255,0.28)',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    marginBottom: '0.75rem',
+                    fontFamily: 'var(--font-body), Oswald, sans-serif',
+                  }}>
                     {formatDate(post.date)}
                   </div>
-                  <div
-                    style={{
-                      fontSize: '0.85rem',
-                      lineHeight: 1.6,
-                      color: 'rgba(245,245,245,0.85)',
-                      fontFamily: 'var(--font-subtitle), League Spartan, sans-serif',
-                    }}
-                  >
-                    {post.description.length > 120
-                      ? post.description.substring(0, 120) + '...'
+                  <p style={{
+                    fontSize: '0.83rem',
+                    lineHeight: 1.7,
+                    color: 'rgba(255,255,255,0.6)',
+                    fontFamily: 'var(--font-subtitle), League Spartan, sans-serif',
+                  }}>
+                    {post.description.length > 110
+                      ? post.description.substring(0, 110) + '…'
                       : post.description}
-                  </div>
+                  </p>
                 </div>
               </motion.div>
             ))}

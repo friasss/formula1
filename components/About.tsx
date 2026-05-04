@@ -19,7 +19,7 @@ export default function About() {
   return (
     <section
       id="about"
-      style={{ background: 'var(--light)', padding: '10rem 0' }}
+      style={{ background: '#f5f5f5', padding: '10rem 0' }}
     >
       <div className="px-6 md:px-16" style={{ maxWidth: 1400, margin: '0 auto' }}>
 
@@ -32,7 +32,7 @@ export default function About() {
         >
           <div
             className="flex items-center gap-3 mb-8"
-            style={{ fontSize: '0.58rem', letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--orange)', fontFamily: 'var(--font-body), Oswald, sans-serif' }}
+            style={{ fontSize: '0.6rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--orange)', fontFamily: 'var(--font-body), Oswald, sans-serif' }}
           >
             <div style={{ width: 30, height: 1, background: 'var(--orange)' }} />
             Sobre Nosotros

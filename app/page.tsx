@@ -30,8 +30,8 @@ export default function Home() {
         {/* Slider de marca */}
         <MarqueeStrip
           items={['SPEED BOLT', 'IPISA', 'STEM RACING RD', 'DISEÑO', 'VELOCIDAD', 'INNOVACIÓN', 'REPÚBLICA DOMINICANA', 'F1 SCALE']}
-          bg="var(--teal-dark)"
-          textColor="rgba(255,255,255,0.6)"
+          bg="var(--orange)"
+          textColor="#000"
         />
 
         <Competition />

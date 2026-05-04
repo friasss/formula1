@@ -56,8 +56,8 @@ export default function Hero() {
           >
             <div style={{ width: 36, height: 1, background: 'var(--orange)' }} />
             <span style={{
-              fontSize: '0.58rem',
-              letterSpacing: '0.32em',
+              fontSize: '0.6rem',
+              letterSpacing: '0.28em',
               textTransform: 'uppercase',
               color: 'rgba(255,255,255,0.4)',
               fontFamily: 'var(--font-body), Oswald, sans-serif',
