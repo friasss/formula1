@@ -4,10 +4,12 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import MarqueeStrip from '@/components/MarqueeStrip'
 import About from '@/components/About'
-import Inspiration from '@/components/Inspiration'
-import ParallaxDivider from '@/components/ParallaxDivider'
 import Brand from '@/components/Brand'
 import Competition from '@/components/Competition'
+import Escuderia from '@/components/Escuderia'
+import TeamRoles from '@/components/TeamRoles'
+import Patrocinio from '@/components/Patrocinio'
+import Recursos from '@/components/Recursos'
 import Posts from '@/components/Posts'
 import Footer from '@/components/Footer'
 import AdminModal from '@/components/AdminModal'
@@ -22,28 +24,21 @@ export default function Home() {
 
       <main>
         <Hero />
-
-        <MarqueeStrip
-          items={['SPEED BOLT', 'STEM RACING RD', 'DISEÑO', 'INNOVACIÓN', 'VELOCIDAD', 'IPISA', 'REPÚBLICA DOMINICANA']}
-          bg="var(--orange)"
-          textColor="var(--black)"
-        />
-
         <About />
-        <Inspiration />
-
-        <ParallaxDivider />
-
         <Brand />
-        <Competition />
 
+        {/* Slider de marca */}
         <MarqueeStrip
-          items={['VELOCIDAD', 'PRECISIÓN', 'AERODINÁMICA', 'INNOVACIÓN', 'EQUIPO', 'STEM']}
-          bg="var(--teal)"
-          textColor="var(--white)"
-          reverse
+          items={['SPEED BOLT', 'IPISA', 'STEM RACING RD', 'DISEÑO', 'VELOCIDAD', 'INNOVACIÓN', 'REPÚBLICA DOMINICANA', 'F1 SCALE']}
+          bg="var(--teal-dark)"
+          textColor="rgba(255,255,255,0.6)"
         />
 
+        <Competition />
+        <Escuderia />
+        <TeamRoles />
+        <Patrocinio />
+        <Recursos />
         <Posts />
       </main>
 
